@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+
+{% block title %}
+<title>Home</title>
+{% endblock %}
+
+{% block content %}
+<h1>Главная страница блога</h1>
+<p>Добро пожаловать на сайт блога!</p>
+<h2>Сейчас в блоге:</h2>
+<ul class="text-decoratete-none">
+    <li>Всего постов: {{ num_posts }}</li>
+    <li>Всего авторов: {{ num_authors }}</li>
+</ul>
+{% endblock %}
