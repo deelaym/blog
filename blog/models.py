@@ -19,11 +19,12 @@ class Post(models.Model):
 
 
 class Author(models.Model):
-    blogger = models.CharField(max_length = 20)
+    blogger = models.CharField(max_length=20)
     bio = models.TextField(max_length=1000, help_text='Биография автора.')
+    slug = models.SlugField(max_length=50, unique=True, db_index=True, verbose_name='URL')
 
     def get_absolute_url(self):
-        return reverse('author-detail', args=[str(self.id)])
+        return reverse('author-detail', kwargs={'slug': self.slug})
 
 
     def __str__(self):

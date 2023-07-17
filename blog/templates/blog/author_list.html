@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container">
+    <h1>All bloggers</h1>
+
+    {% if author_list %}
+        <ul>
+            {% for author in author_list %}
+                <li><a href="{{ author.get_absolute_url }}">
+                    {{ author.blogger}}
+                </a></li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>Пока нет блоггеров.</p>
+    {% endif %}
+</div>
+{% endblock %}
