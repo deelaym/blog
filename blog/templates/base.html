@@ -16,8 +16,8 @@
         <div class="container">
             <div class="d-flex flex-wrap align-items-center">
                 <ul class="nav col-9 col-lg-auto me-lg-auto mb-2  mb-md-0 justify-content-start">
-                    <li><a href="#" class="nav-link px-2 text-secondary">Home</a></li>
-                    <li><a href="#" class="nav-link px-2 text-white">All posts</a></li>
+                    <li><a href="{% url 'index' %}" class="nav-link px-2 text-secondary">Home</a></li>
+                    <li><a href="{% url 'posts' %}" class="nav-link px-2 text-white">All posts</a></li>
                     <li><a href="{% url 'authors' %}" class="nav-link px-2 text-white">All bloggers</a></li>
                 </ul>
                 <div class="justify-content-end align-items-center">
