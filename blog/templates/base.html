@@ -16,7 +16,7 @@
         <div class="container">
             <div class="d-flex flex-wrap align-items-center">
                 <ul class="nav col-9 col-lg-auto me-lg-auto mb-2  mb-md-0 justify-content-start">
-                    <li><a href="{% url 'index' %}" class="nav-link px-2 text-secondary">Home</a></li>
+                    <li><a href="{% url 'index' %}" class="nav-link px-2 text-warning">Home</a></li>
                     <li><a href="{% url 'posts' %}" class="nav-link px-2 text-white">All posts</a></li>
                     <li><a href="{% url 'authors' %}" class="nav-link px-2 text-white">All bloggers</a></li>
                 </ul>
@@ -34,6 +34,44 @@
 
 <div class="container">
     {% block content %}{% endblock %}
+
+    {% block pagination %}
+        {% if is_paginated %}
+            <nav>
+                <ul class="pagination justify-content-center">
+                    <li class="page-item">
+                        {% if page_obj.has_previous %}
+                            <a class="page-link  text-dark" href="?page={{ page_obj.previous_page_number }}" aria-label="Previous">
+                                <span aria-hidden="true">«</span>
+                            </a>
+                        {% else %}
+                            <a class="page-link disabled" href="#" aria-label="Previous">
+                                <span aria-hidden="true">«</span>
+                            </a>
+                        {% endif %}
+                    </li>
+                    {% for num in page_obj.paginator.page_range %}
+                        {% if page_obj.number == num %}
+                            <li class="page-item"><a class="page-link active bg-warning border-dark-subtle  text-dark" href="?page={{ num }}">{{ num }}</a></li>
+                        {% else %}
+                            <li class="page-item"><a class="page-link text-dark" href="?page={{ num }}">{{ num }}</a></li>
+                        {% endif %}
+                    {% endfor %}
+                    <li class="page-item">
+                        {% if page_obj.has_next %}
+                            <a class="page-link text-dark" href="?page={{ page_obj.next_page_number }}" aria-label="Next">
+                                <span aria-hidden="true">»</span>
+                            </a>
+                        {% else %}
+                            <a class="page-link disabled" href="#" aria-label="Next">
+                                <span aria-hidden="true">»</span>
+                            </a>
+                        {% endif %}
+                    </li>
+                </ul>
+            </nav>
+        {% endif %}
+    {% endblock %}
 </div>
 
 

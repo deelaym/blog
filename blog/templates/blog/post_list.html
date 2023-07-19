@@ -9,7 +9,7 @@
             <li><a href="{{ post.get_absolute_url }}">
                 {{ post.title }} </a>
             ({{ post.date }}) —
-                <a href="{{ author.det_absolute_url}}">{{ post.author }}</a></li>
+                <a href="{{ post.author.get_absolute_url }}">{{ post.author }}</a></li>
         {% empty %}
             <p>Пока нет постов.</p>
         {% endfor %}

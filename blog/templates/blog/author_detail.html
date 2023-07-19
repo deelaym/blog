@@ -4,7 +4,7 @@
     <div class="container">
         <h1>Blogger: {{ author.blogger }}</h1>
         <h2>Bio</h2>
-        <p>{{ author.bio }}</p>
+        <p>{{ author.bio|linebreaks }}</p>
         <h2>Blog list</h2>
         <ul>
             {% for post in author.post_set.all %}

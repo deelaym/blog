@@ -4,9 +4,9 @@
     <div class="container">
         <h1>{{ post.title }}</h1>
         <p class="text-muted">{{ post.date}}</p>
-        <p><b>Author:</b> <a href="{{ author.get_absolute_url }}">{{ post.author }}</a></p>
+        <p><b>Author:</b> <a href="{{ post.author.get_absolute_url }}">{{ post.author }}</a></p>
         <p><b>Description:</b></p>
-        <p>{{ post.description }}</p>
+        <p>{{ post.description|linebreaks }}</p>
 
         <div class="ms-5">
             <h3>Comments</h3>

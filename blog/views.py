@@ -17,7 +17,7 @@ def index(request):
 
 class PostListView(generic.ListView):
     model = Post
-    pagination = 5
+    paginate_by = 5
 
 
 class PostDetailView(generic.DetailView):
@@ -26,7 +26,7 @@ class PostDetailView(generic.DetailView):
 
 class AuthorListView(generic.ListView):
     model = Author
-    pagination = 5
+    paginate_by = 5
 
 
 class AuthorDetailView(generic.DetailView):
