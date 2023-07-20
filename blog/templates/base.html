@@ -20,10 +20,17 @@
                     <li><a href="{% url 'posts' %}" class="nav-link px-2 text-white">All posts</a></li>
                     <li><a href="{% url 'authors' %}" class="nav-link px-2 text-white">All bloggers</a></li>
                 </ul>
-                <div class="justify-content-end align-items-center">
-                    <button type="button" class="btn btn-outline-light me-2">Login</button>
-                    <button type="button" class="btn btn-warning">Sign-up</button>
-                </div>
+                {% if user.is_authenticated %}
+                    <div class="justify-content-end align-items-center">
+                        <a href="#" class="text-white text-decoration-none me-3">{{ user.get_username }}</a>
+                        <a href="{% url 'logout' %}"><button type="button" class="btn btn-outline-light me-2">Logout</button></a>
+                    </div>
+                {% else %}
+                    <div class="justify-content-end align-items-center">
+                        <a href="{% url 'login' %}"><button type="button" class="btn btn-outline-light me-2">Login</button></a>
+                        <button type="button" class="btn btn-warning">Sign-up</button>
+                    </div>
+                {% endif %}
 <!--                <form class="col-12 col-lg-auto mb-3 mb-lg-0 ms-lg-3" role="search">-->
 <!--                    <input type="search" class="form-control form-control-dark text-bg-dark" placeholder="Search..." aria-label="Search">-->
 <!--                </form>-->
