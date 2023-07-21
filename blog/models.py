@@ -33,7 +33,7 @@ class Author(models.Model):
 
 
 class Comment(models.Model):
-    author = models.ForeignKey('Author', on_delete=models.SET_NULL, null=True)
+    user = models.CharField(max_length=20)
     datetime = models.DateTimeField(auto_now_add=True)
     description = models.TextField(max_length=500, help_text='Содержание комментария.')
     post = models.ForeignKey('Post', on_delete=models.SET_NULL, null=True)

@@ -12,12 +12,21 @@
             <h3>Comments</h3>
             {% for comment in post.comment_set.all %}
                 <hr>
-                <p><b>{{ comment.author }}</b> <span class="text-muted mt-0">({{ comment.datetime }})</span></p>
+                <p><b>{{ comment.user }}</b> <span class="text-muted mt-0">({{ comment.datetime }})</span></p>
                 <p ></p>
                 <p>{{ comment.description }}</p>
             {% empty %}
                 <p>Пока нет комментариев.</p>
             {% endfor %}
+
+            <hr>
+            <div class="mb-4">
+                {% if user.is_authenticated %}
+                    <a href="{% url 'comment' post.id %}">Добавить комментарий</a>
+                {% else %}
+                    <p><a href="{% url 'login' %}">Войдите</a>, чтобы оставить комментарий.</p>
+                {% endif %}
+            </div>
         </div>
     </div>
 {% endblock %}
