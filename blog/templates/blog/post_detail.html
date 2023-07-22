@@ -2,7 +2,7 @@
 
 {% block content%}
     <div class="container">
-        <h1>{{ post.title }}</h1>
+        <h1>{{ post.title|title }}</h1>
         <p class="text-muted">{{ post.date}}</p>
         <p><b>Author:</b> <a href="{{ post.author.get_absolute_url }}">{{ post.author }}</a></p>
         <p><b>Description:</b></p>
@@ -14,7 +14,7 @@
                 <hr>
                 <p><b>{{ comment.user }}</b> <span class="text-muted mt-0">({{ comment.datetime }})</span></p>
                 <p ></p>
-                <p>{{ comment.description }}</p>
+                <p class="text-break">{{ comment.description }}</p>
             {% empty %}
                 <p>Пока нет комментариев.</p>
             {% endfor %}

@@ -6,6 +6,9 @@ from django.contrib.auth.decorators import login_required
 from django.shortcuts import get_object_or_404
 from django.http import HttpResponseRedirect
 from django.urls import reverse
+from django.contrib import messages
+from django.views.generic.edit import CreateView, UpdateView, DeleteView
+from django.contrib.auth.mixins import PermissionRequiredMixin
 
 
 def index(request):
@@ -49,14 +52,35 @@ def write_comment(request, pk):
             new_comment.post = post
             new_comment.user = request.user.username
             new_comment.save()
+            messages.success(request, 'Комментарий успешно отправлен.')
             return HttpResponseRedirect(reverse('comment', args=[post.id]))
     else:
         form = CommentForm()
 
-    return render(request, 'blog/comment.html', {'form': form, 'comments': comments})
+    return render(request, 'blog/comment.html', {'form': form, 'comments': comments, 'post': post})
 
 
+class PostCreate(CreateView, PermissionRequiredMixin):
+    model = Post
+    fields = ['title', 'description']
+    permission_required = 'blog.add_post'
 
+    def form_valid(self, form):
+        form.instance.author = Author.objects.get(user=self.request.user)
+        return super().form_valid(form)
+
+
+class PostUpdate(UpdateView, PermissionRequiredMixin):
+    model = Post
+    fields = '__all__'
+    permission_required = 'blog.add_post'
+
+
+class PostDelete(DeleteView, PermissionRequiredMixin):
+    model = Post
+    fields = '__all__'
+    permission_required = 'blog.add_post'
+    # success_url = reverse('post')
 
 
 

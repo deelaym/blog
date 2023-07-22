@@ -15,22 +15,30 @@
     <header class="p-3 text-bg-dark mb-3">
         <div class="container">
             <div class="d-flex flex-wrap align-items-center">
-                <ul class="nav col-9 col-lg-auto me-lg-auto mb-2  mb-md-0 justify-content-start">
+                <ul class="nav col-8 col-lg-auto me-lg-auto mb-2  mb-md-0 justify-content-start">
                     <li><a href="{% url 'index' %}" class="nav-link px-2 text-warning">Home</a></li>
                     <li><a href="{% url 'posts' %}" class="nav-link px-2 text-white">All posts</a></li>
                     <li><a href="{% url 'authors' %}" class="nav-link px-2 text-white">All bloggers</a></li>
                 </ul>
-                {% if user.is_authenticated %}
-                    <div class="justify-content-end align-items-center">
-                        <a href="#" class="text-white text-decoration-none me-3">{{ user.get_username }}</a>
-                        <a href="{% url 'logout' %}"><button type="button" class="btn btn-outline-light me-2">Logout</button></a>
-                    </div>
-                {% else %}
-                    <div class="justify-content-end align-items-center">
-                        <a href="{% url 'login' %}"><button type="button" class="btn btn-outline-light me-2">Login</button></a>
-                        <button type="button" class="btn btn-warning">Sign-up</button>
-                    </div>
-                {% endif %}
+
+                <div class="d-inline-flex justify-content-end align-items-center">
+                    {% if user.is_authenticated %}
+                        {% if perms.blog.add_post %}
+                            <div>
+                                <a href="{% url 'post-create' %}"><button type="button" class="btn btn-warning">+</button></a>
+                            </div>
+                        {% endif %}
+                        <div>
+                            <a href="#" class="text-white text-decoration-none me-3 ms-3">{{ user.get_username }}</a>
+                            <a href="{% url 'logout' %}"><button type="button" class="btn btn-outline-light me-2">Logout</button></a>
+                        </div>
+                    {% else %}
+                        <div>
+                            <a href="{% url 'login' %}"><button type="button" class="btn btn-outline-light me-2">Login</button></a>
+                            <button type="button" class="btn btn-warning">Sign-up</button>
+                        </div>
+                    {% endif %}
+                </div>
 <!--                <form class="col-12 col-lg-auto mb-3 mb-lg-0 ms-lg-3" role="search">-->
 <!--                    <input type="search" class="form-control form-control-dark text-bg-dark" placeholder="Search..." aria-label="Search">-->
 <!--                </form>-->

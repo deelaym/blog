@@ -15,12 +15,13 @@ class Post(models.Model):
     class Meta:
         ordering = ['date']
 
+
     def __str__(self):
         return self.title
 
 
 class Author(models.Model):
-    blogger = models.CharField(max_length=20)
+    user = models.CharField(max_length=20)
     bio = models.TextField(max_length=1000, help_text='Биография автора.')
     slug = models.SlugField(max_length=50, unique=True, db_index=True, verbose_name='URL')
 
@@ -29,7 +30,7 @@ class Author(models.Model):
 
 
     def __str__(self):
-        return self.blogger
+        return self.user
 
 
 class Comment(models.Model):

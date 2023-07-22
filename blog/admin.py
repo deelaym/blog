@@ -6,7 +6,7 @@ admin.site.register(Comment)
 
 
 class AuthorAdmin(admin.ModelAdmin):
-    list_display = ('blogger',)
-    prepopulated_fields = {'slug': ('blogger',)}
+    list_display = ('user',)
+    prepopulated_fields = {'slug': ('user',)}
 
 admin.site.register(Author, AuthorAdmin)
