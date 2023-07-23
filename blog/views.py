@@ -9,17 +9,20 @@ from django.urls import reverse
 from django.contrib import messages
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.contrib.auth.mixins import PermissionRequiredMixin
+from django.urls import reverse_lazy
 
 
 def index(request):
     num_posts = Post.objects.all().count()
     num_authors = Author.objects.all().count()
+    end_post = Post.objects.latest('date')
 
     return render(
         request,
         'index.html',
         context={'num_posts': num_posts,
-                 'num_authors': num_authors},
+                 'num_authors': num_authors,
+                 'end_post': end_post},
     )
 
 
@@ -72,15 +75,14 @@ class PostCreate(CreateView, PermissionRequiredMixin):
 
 class PostUpdate(UpdateView, PermissionRequiredMixin):
     model = Post
-    fields = '__all__'
+    fields = ['title', 'description']
     permission_required = 'blog.add_post'
 
 
 class PostDelete(DeleteView, PermissionRequiredMixin):
     model = Post
-    fields = '__all__'
     permission_required = 'blog.add_post'
-    # success_url = reverse('post')
+    success_url = reverse_lazy('posts')
 
 
 

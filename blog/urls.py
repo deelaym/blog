@@ -11,7 +11,7 @@ urlpatterns = [
     url(r'^authors/$', views.AuthorListView.as_view(), name='authors'),
     url(r'^authors/(?P<slug>[\w-]+)/$', views.AuthorDetailView.as_view(), name='author-detail'),
     url(r'^posts/(?P<pk>\d+)/comment/$', views.write_comment, name='comment'),
-    url(r'^post/create/$', views.PostCreate.as_view(), name='post-create'),
-    url(r'^post/(?P<pk>\d+)/update/$', views.PostUpdate.as_view(), name='post-update'),
-    url(r'^post/(?P<pk>\d+)/delete/$', views.PostDelete.as_view(), name='post-delete'),
+    url(r'^posts/create/$', views.PostCreate.as_view(), name='post-create'),
+    url(r'^posts/(?P<pk>\d+)/update/$', views.PostUpdate.as_view(), name='post-update'),
+    url(r'^posts/(?P<pk>\d+)/delete/$', views.PostDelete.as_view(), name='post-delete'),
 ]
