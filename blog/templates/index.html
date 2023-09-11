@@ -15,10 +15,10 @@
         </ul>
         <h2>Последний пост:</h2>
         <div class="card border-warning mb-3">
-            <div class="card-header"><a href="{{ post.author.get_absolute_url }}">{{ end_post.author }}</a>
-                <span class="text-muted">({{ end_post.date }})</span></div>
+            <div class="card-header"><a href="{{ end_post.author.get_absolute_url }}">{{ end_post.author }}</a>
+                <span class="text-muted">({{ end_post.created }})</span></div>
             <div class="card-body">
-                <h5 class="card-title"><a href="{{ post.get_absolute_url }}">
+                <h5 class="card-title"><a href="{{ end_post.get_absolute_url }}">
             {{ end_post.title }}</a></h5>
                 <p class="card-text">{{ end_post.description }}</p>
             </div>

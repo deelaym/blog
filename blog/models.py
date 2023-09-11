@@ -5,7 +5,8 @@ from django.contrib.auth.models import User
 
 class Post(models.Model):
     title = models.CharField(max_length=100)
-    date = models.DateField(auto_now_add=True)
+    created = models.DateTimeField(auto_now_add=True)
+    updated = models.DateTimeField(auto_now=True)
     author = models.ForeignKey('Author', on_delete=models.SET_NULL, null=True)
     description = models.TextField(max_length=1000, help_text='Содержание поста.')
 
@@ -13,7 +14,7 @@ class Post(models.Model):
         return reverse('post-detail', args=[str(self.id)])
 
     class Meta:
-        ordering = ['date']
+        ordering = ['-created']
 
 
     def __str__(self):
@@ -35,12 +36,12 @@ class Author(models.Model):
 
 class Comment(models.Model):
     user = models.CharField(max_length=20)
-    datetime = models.DateTimeField(auto_now_add=True)
+    created = models.DateTimeField(auto_now_add=True)
     description = models.TextField(max_length=500, help_text='Содержание комментария.')
     post = models.ForeignKey('Post', on_delete=models.SET_NULL, null=True)
 
     class Meta:
-        ordering = ['datetime']
+        ordering = ['created']
 
     def __str__(self):
         return self.description

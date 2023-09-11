@@ -1,0 +1,8 @@
+<div class="container">
+    <h3>Add a comment</h3>
+    <form action="{% url 'comment' post.pk %}" method="post">
+        <div>{{ form.description }}</div>
+        {% csrf_token %}
+        <input class="btn btn-outline-dark" type="submit" value="Отправить"/>
+    </form>
+</div>

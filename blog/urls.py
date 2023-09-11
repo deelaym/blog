@@ -1,17 +1,18 @@
 from django.urls import path
 from . import views
-from django.conf.urls import url
+from django.urls import re_path
 
 
 urlpatterns = [
     path('', views.index, name='index'),
-    url(r'^$', views.index, name='index'),
-    url(r'^posts/$', views.PostListView.as_view(), name='posts'),
-    url(r'^posts/(?P<pk>\d+)$', views.PostDetailView.as_view(), name='post-detail'),
-    url(r'^authors/$', views.AuthorListView.as_view(), name='authors'),
-    url(r'^authors/(?P<slug>[\w-]+)/$', views.AuthorDetailView.as_view(), name='author-detail'),
-    url(r'^posts/(?P<pk>\d+)/comment/$', views.write_comment, name='comment'),
-    url(r'^posts/create/$', views.PostCreate.as_view(), name='post-create'),
-    url(r'^posts/(?P<pk>\d+)/update/$', views.PostUpdate.as_view(), name='post-update'),
-    url(r'^posts/(?P<pk>\d+)/delete/$', views.PostDelete.as_view(), name='post-delete'),
+    re_path(r'^$', views.index, name='index'),
+    re_path(r'^posts/$', views.PostListView.as_view(), name='posts'),
+    # re_path(r'^posts/(?P<pk>\d+)$', views.PostDetailView.as_view(), name='post-detail'),
+    re_path(r'^posts/(?P<pk>\d+)$', views.post_detail, name='post-detail'),
+    re_path(r'^authors/$', views.AuthorListView.as_view(), name='authors'),
+    re_path(r'^authors/(?P<slug>[\w-]+)/$', views.AuthorDetailView.as_view(), name='author-detail'),
+    re_path(r'^posts/(?P<pk>\d+)/comment/$', views.write_comment, name='comment'),
+    re_path(r'^posts/create/$', views.PostCreate.as_view(), name='post-create'),
+    re_path(r'^posts/(?P<pk>\d+)/update/$', views.PostUpdate.as_view(), name='post-update'),
+    re_path(r'^posts/(?P<pk>\d+)/delete/$', views.PostDelete.as_view(), name='post-delete'),
 ]
