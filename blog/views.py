@@ -4,31 +4,50 @@ from django.views import generic
 from .forms import CommentForm
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import get_object_or_404
-from django.urls import reverse
 from django.contrib import messages
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.contrib.auth.mixins import PermissionRequiredMixin
 from django.urls import reverse_lazy
 from django.views.decorators.http import require_POST
+from taggit.models import Tag
+from django.db.models import Count
 
 
 def index(request):
     num_posts = Post.objects.all().count()
     num_authors = Author.objects.all().count()
     end_post = Post.objects.latest('created')
+    tags = Tag.objects.annotate(num_posts=Count('post')).order_by('-num_posts')[:10]
 
     return render(
         request,
         'index.html',
         context={'num_posts': num_posts,
                  'num_authors': num_authors,
-                 'end_post': end_post},
+                 'end_post': end_post,
+                 'tags': tags},
     )
 
 
 class PostListView(generic.ListView):
     model = Post
     paginate_by = 5
+
+
+class PostByTagListView(generic.ListView):
+    model = Post
+    paginate_by = 5
+
+    def get_queryset(self):
+        self.tag = Tag.objects.get(slug=self.kwargs.get('slug'))
+        queryset = Post.objects.all().filter(tags__slug=self.tag.slug)
+        return queryset
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['tag'] = self.tag
+        return context
+
 
 
 # class PostDetailView(generic.DetailView):
@@ -74,8 +93,9 @@ def write_comment(request, pk):
 
 class PostCreate(CreateView, PermissionRequiredMixin):
     model = Post
-    fields = ['title', 'description']
+    fields = ['title', 'description', 'tag']
     permission_required = 'blog.add_post'
+
 
     def form_valid(self, form):
         form.instance.author = Author.objects.get(user=self.request.user)
@@ -84,7 +104,7 @@ class PostCreate(CreateView, PermissionRequiredMixin):
 
 class PostUpdate(UpdateView, PermissionRequiredMixin):
     model = Post
-    fields = ['title', 'description']
+    fields = ['title', 'description', 'tag']
     permission_required = 'blog.add_post'
 
 

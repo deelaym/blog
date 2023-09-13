@@ -23,5 +23,11 @@
                 <p class="card-text">{{ end_post.description }}</p>
             </div>
         </div>
+        <h2>Популярные теги:</h2>
+        <div class="container text-center">
+            {% for tag in tags %}
+                <a href="{% url 'posts-by-tag' tag.slug %}" class="badge rounded-pill bg-warning text-dark link-underline link-underline-opacity-0 mb-3 me-2 ms-2" style="font-size:1.25em;">{{ tag }}</a>
+            {% endfor %}
+        </div>
     </div>
 {% endblock %}
