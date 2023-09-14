@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+
+{% block title %}<title>Search</title>{% endblock %}
+
+{% block content %}
+    {% if query %}
+        <h1>Posts containing "{{ query }}"</h1>
+        <h3>
+            {% with results.count as total %}
+                Found {{ total }} result{{ total_results|pluralize }}
+            {% endwith %}
+        </h3>
+        {% for post in results %}
+            <div class="card border-dark mb-3">
+                <div class="card-header"><a href="{{ post.author.get_absolute_url }}">{{ post.author }}</a>
+                    <span class="text-muted">({{ post.created }})</span></div>
+                <div class="card-body">
+                    <h5 class="card-title"><a href="{{ post.get_absolute_url }}">
+                {{ post.title }}</a></h5>
+                    <p class="card-text">{{ post.description|truncatewords:19 }}
+                    <a href="{{ post.get_absolute_url }}">Читать дальше</a></p>
+                    {% for tag in post.tags.all %}
+                        <a href="{% url 'posts-by-tag' tag.slug %}" class="badge rounded-pill bg-warning text-dark link-underline link-underline-opacity-0" style="font-size:1em;">
+                            {{ tag }}
+                        </a>
+                        {% if not forloop.last %}, {% endif %}
+                    {% endfor %}
+                </div>
+            </div>
+        {% empty %}
+            <p>There are no results.</p>
+        {% endfor %}
+
+    {% else %}
+        <h1>Search for posts</h1>
+        <form method="get">
+            {{ form.query }}
+            <input class="btn btn-outline-dark" type="submit" value="Search"/>
+        </form>
+    {% endif %}
+{% endblock %}

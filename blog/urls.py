@@ -16,5 +16,6 @@ urlpatterns = [
     re_path(r'^posts/(?P<pk>\d+)/update/$', views.PostUpdate.as_view(), name='post-update'),
     re_path(r'^posts/(?P<pk>\d+)/delete/$', views.PostDelete.as_view(), name='post-delete'),
     re_path(r'^posts/tag/(?P<slug>[\w-]+)$', views.PostByTagListView.as_view(), name='posts-by-tag'),
+    re_path(r'^search/$', views.post_search, name='post-search'),
 
 ]

@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from .models import Post, Author, Comment
 from django.views import generic
-from .forms import CommentForm
+from .forms import CommentForm, SearchForm
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import get_object_or_404
 from django.contrib import messages
@@ -11,6 +11,7 @@ from django.urls import reverse_lazy
 from django.views.decorators.http import require_POST
 from taggit.models import Tag
 from django.db.models import Count
+from django.contrib.postgres.search import SearchVector
 
 
 def index(request):
@@ -58,11 +59,14 @@ def post_detail(request, pk):
     comments = post.comment_set.all()
     form = CommentForm()
 
+    similar_posts = post.tags.similar_objects()[:3]
+
 
     return render(request, 'blog/post_detail.html',
                   {'post': post,
                    'comments': comments,
-                   'form': form})
+                   'form': form,
+                   'similar_posts': similar_posts})
 
 
 class AuthorListView(generic.ListView):
@@ -93,7 +97,7 @@ def write_comment(request, pk):
 
 class PostCreate(CreateView, PermissionRequiredMixin):
     model = Post
-    fields = ['title', 'description', 'tag']
+    fields = ['title', 'description', 'tags']
     permission_required = 'blog.add_post'
 
 
@@ -104,7 +108,7 @@ class PostCreate(CreateView, PermissionRequiredMixin):
 
 class PostUpdate(UpdateView, PermissionRequiredMixin):
     model = Post
-    fields = ['title', 'description', 'tag']
+    fields = ['title', 'description', 'tags']
     permission_required = 'blog.add_post'
 
 
@@ -113,5 +117,24 @@ class PostDelete(DeleteView, PermissionRequiredMixin):
     permission_required = 'blog.add_post'
     success_url = reverse_lazy('posts')
 
+
+
+def post_search(request):
+    form = SearchForm()
+    query = None
+    results = []
+
+    if 'query' in request.GET:
+        form = SearchForm(request.GET)
+        if form.is_valid():
+            query = form.cleaned_data['query']
+            results = Post.objects.annotate(
+                search=SearchVector('title', 'description')).filter(search=query)
+
+    return render(request,
+                   'blog/post_search.html',
+                   {'form': form,
+                    'query': query,
+                    'results': results})
 
 
