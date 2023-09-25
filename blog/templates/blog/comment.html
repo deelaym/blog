@@ -6,7 +6,7 @@
             {% if messages %}
                 {% for message in messages %}
                     <div class="alert alert-success alert-dismissible fade show" role="alert">
-                        {{ message }} <a href="{{ post.get_absolute_url }}" class="alert-link">Вернуться к посту.</a>
+                        {{ message }} <a href="{{ post.get_absolute_url }}" class="alert-link">Return to post.</a>
                         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                     </div>
                 {% endfor %}

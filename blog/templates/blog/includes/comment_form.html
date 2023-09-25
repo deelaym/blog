@@ -3,6 +3,6 @@
     <form action="{% url 'comment' post.pk %}" method="post">
         <div>{{ form.description }}</div>
         {% csrf_token %}
-        <input class="btn btn-outline-dark" type="submit" value="Отправить"/>
+        <input class="btn btn-outline-dark" type="submit" value="Submit"/>
     </form>
 </div>

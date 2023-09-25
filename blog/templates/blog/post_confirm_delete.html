@@ -5,7 +5,7 @@
         <p>Are you sure you want to delete the post: <a href="post.get_absolute_url">{{ post.title }}?</a></p>
         <form action="" method="POST">
             {% csrf_token %}
-            <input class="btn btn-outline-dark" type="submit" value="Да, удалить."/>
+            <input class="btn btn-outline-dark" type="submit" value="Yes, delete it."/>
         </form>
     {% endif %}
 {% endblock %}
