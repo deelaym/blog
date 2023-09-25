@@ -6,14 +6,14 @@
 
 {% block content %}
     <div class="container">
-        <h1>Главная страница блога</h1>
-        <p>Добро пожаловать на сайт блога!</p>
-        <h2>Сейчас в блоге:</h2>
+        <h1>Blog home page</h1>
+        <p>Welcome to the blog site!</p>
+        <h2>Now on the blog:</h2>
         <ul class="text-decoratete-none">
-            <li>Всего постов: {{ num_posts }}</li>
-            <li>Всего авторов: {{ num_authors }}</li>
+            <li>Total posts: {{ num_posts }}</li>
+            <li>Total authors: {{ num_authors }}</li>
         </ul>
-        <h2>Последний пост:</h2>
+        <h2>Latest post:</h2>
         <div class="card border-dark mb-3">
             <div class="card-header"><a href="{{ end_post.author.get_absolute_url }}">{{ end_post.author }}</a>
                 <span class="text-muted">({{ end_post.created }})</span></div>
@@ -23,7 +23,7 @@
                 <p class="card-text">{{ end_post.description }}</p>
             </div>
         </div>
-        <h2>Популярные теги:</h2>
+        <h2>Popular tags:</h2>
         <div class="container text-center">
             {% for tag in tags %}
                 <a href="{% url 'posts-by-tag' tag.slug %}" class="badge rounded-pill bg-warning text-dark link-underline link-underline-opacity-0 mb-3 me-2 ms-2" style="font-size:1.25em;">{{ tag }}</a>

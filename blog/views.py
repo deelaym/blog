@@ -12,6 +12,7 @@ from django.views.decorators.http import require_POST
 from taggit.models import Tag
 from django.db.models import Count
 from django.contrib.postgres.search import SearchVector
+from django.contrib.auth.forms import UserCreationForm
 
 
 def index(request):
@@ -89,7 +90,7 @@ def write_comment(request, pk):
         comment.post = post
         comment.user = request.user.username
         comment.save()
-        messages.success(request, 'Комментарий успешно отправлен.')
+        messages.success(request, 'Comment sent successfully.')
         return redirect(post)
 
     return render(request, 'blog/comment.html', {'form': form, 'comment': comment, 'post': post})
@@ -138,3 +139,16 @@ def post_search(request):
                     'results': results})
 
 
+def register(request):
+    if request.method == 'POST':
+        form = UserCreationForm(request.POST)
+        if form.is_valid():
+            new_user = form.save(commit=False)
+            new_user.save()
+            return render(request, 'registration/register_done.html',
+                           {'new_user': new_user})
+            # return redirect('registration/register_done.html')
+    else:
+        form = UserCreationForm()
+    return render(request, 'registration/register.html',
+                  {'form': form})

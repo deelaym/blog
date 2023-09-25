@@ -1,19 +1,19 @@
 {% extends "base.html" %}
 
-{% block title %}<title>{{ post.title }}</title>{% endblock %}
+{% block title %}{{ post.title }}{% endblock %}
 
 {% block content %}
+    <p>
+        {% if messages %}
+            {% for message in messages %}
+                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                    {{ message }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            {% endfor %}
+        {% endif %}
+    </p>
     <div class="container">
-        <p>
-            {% if messages %}
-                {% for message in messages %}
-                    <div class="alert alert-success alert-dismissible fade show" role="alert">
-                        {{ message }}
-                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                    </div>
-                {% endfor %}
-            {% endif %}
-        </p>
         <div class="row justify-content-between">
             <div class="col-9">
                 <h1>{{ post.title|title }}</h1>
@@ -72,7 +72,7 @@
                 <p ></p>
                 <p class="text-break">{{ comment.description }}</p>
             {% empty %}
-                <p>Пока нет комментариев.</p>
+                <p>No comments yet.</p>
             {% endfor %}
 
             <hr>
@@ -80,7 +80,7 @@
                 {% if user.is_authenticated %}
                     {% include "blog/includes/comment_form.html" %}
                 {% else %}
-                    <p><a href="{% url 'login' %}">Войдите</a>, чтобы оставить комментарий.</p>
+                    <p><a href="{% url 'login' %}">Login</a> to leave a comment.</p>
                 {% endif %}
             </div>
         </div>

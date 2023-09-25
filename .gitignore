@@ -8,4 +8,7 @@ db.sqlite3
 *.bak
 local_settings.py
 .env
+blog_data.json
+.idea
+
 

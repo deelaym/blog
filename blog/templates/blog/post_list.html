@@ -1,13 +1,11 @@
 {% extends "base.html" %}
 
 {% block title %}
-    <title>
     {% if tag %}
         {{ tag.name }}
     {% else %}
         All posts
     {% endif %}
-    </title>
 {% endblock %}
 
 {% block content %}
@@ -37,7 +35,7 @@
         </div>
 
     {% empty %}
-        <p>Пока нет постов.</p>
+        <p>No posts yet.</p>
     {% endfor %}
 </div>
 {% endblock %}
